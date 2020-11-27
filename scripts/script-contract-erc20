@@ -1,0 +1,59 @@
+const client = await useOptions(coralnetOptions).setup("rodrigo");
+const address = client.senderAddress;
+
+const cw20 = CW20(client);
+
+.editor
+const initMsg: InitMsg = {
+  name: "My Coin",
+  symbol: "MINE",
+  decimals: 6,
+  // list of all validator self-delegate addresses - 100 STARs each!
+  initial_balances: [
+    { address, amount: "12345678000"},
+  ],
+  mint: {
+    minter: address,
+    cap: "99900000000"
+  },
+};
+^D
+
+const codeId = 4;
+const mine = await cw20.instantiate(codeId, initMsg, "MINE");
+console.log(`Contract: ${mine.contractAddress}`);
+// Contract: coral13nkgqrfymug724h8pprpexqj9h629sa3yzcqfk
+
+// now, check the configuration
+mine.balance();
+mine.tokenInfo()
+mine.minter()
+
+
+
+const someone = "coral1hzllnaf9tezv578p3ysmml6j00ysdac4xwly9w";
+const other = "coral1dyual04q9m3f0a7qsvfx4hvu8ceyrxw9yldp8w";
+
+// right now, only you have tokens
+mine.balance()
+mine.balance(someone)
+mine.balance(other)
+// and watch the total
+mine.tokenInfo()
+
+// let's mint some tokens for someone
+mine.mint(someone, "999888000")
+// Bonus, take the tx hash printed out and cut-paste that into https://bigdipper.coralnet.cosmwasm.com
+// eg 26D5514CF437EE584793768B56CB4E605F1F6E61FC0123030DC64E08E2EE97FA
+
+// See balances updated
+mine.balance(someone)
+mine.balance()
+// and the supply goes up
+mine.tokenInfo()
+
+// Okay, now let's transfer some tokens... that is the more normal one, right?
+mine.transfer(other, "4567000");
+// eg. 4A76EFFEB09C82D0FEB97C3B5A9D5BADB6E9BD71F4EF248A3EF8B232C2F7262A
+mine.balance(other)
+mine.balance()
