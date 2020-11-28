@@ -32,7 +32,7 @@ process.cwd()
 const wasm = fs.readFileSync('contract.wasm');
 
 // deploy do contrato na rede 
-const up = await doctorClient.upload(wasm, { source: "medical-application", builder: "cosmwasm/rust-optimizer:0.9.0"});
+const up = await doctorClient.upload(wasm, { source: "https://crates.io/api/v1/crates/cw-escrow/0.6.0/download", builder: "cosmwasm/rust-optimizer:0.9.0"});
 
 console.log(up);
 const { codeId } = up;
